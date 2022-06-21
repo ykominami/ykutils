@@ -106,7 +106,6 @@ module Ykutils
 
           @main_sep_ary << key
           @main_sep_hash[key] = { "TITLE" => key }
-
         else
           puts("Error")
           puts(line["CONTENT"])

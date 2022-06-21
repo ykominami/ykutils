@@ -21,10 +21,10 @@ module Ykutils
 
       def self.set(key, value)
         @@hs[key] = if value
-                      Assoc.convert(value)
-                    else
-                      value
-                    end
+            Assoc.convert(value)
+          else
+            value
+          end
       end
 
       def self.get(key)
@@ -47,10 +47,10 @@ module Ykutils
 
       def self.auto_config_to_inner(str, misc_option = nil)
         src_encoding = if str
-                         Assoc.to_nkf_encoding_format(NKFUTIL.guess_encoding(str))
-                       else
-                         "A"
-                       end
+            Assoc.to_nkf_encoding_format(NKFUTIL.guess_encoding(str))
+          else
+            "A"
+          end
 
         inner_encoding = Assoc.to_nkf_encoding_format(Assoc.get_inner_encoding)
         if inner_encoding != "A"

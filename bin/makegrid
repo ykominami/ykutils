@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+require "ykutils"
+
+# You can add fixtures and/or initialization code here to make experimenting
+# with your gem easier. You can also use a different console, if you like.
+
+# (If you use this, don't forget to add pry to your Gemfile!)
+# require "pry"
+# Pry.start
+
+#require "irb"
+#IRB.start(__FILE__)
+#puts( make_grid(1 , 2) )
+
+#puts Ykutils::Erubyx::make_grid_list()
+min_row = ARGV[0].to_i
+max_row = ARGV[1].to_i
+min_colum = ARGV[2].to_i
+max_colum = ARGV[3].to_i
+puts Ykutils::Gridlist::make_grid_list_x(min_row, max_row, min_colum, max_colum)

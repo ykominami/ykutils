@@ -66,7 +66,6 @@ module Ykutils
           @line_stack.push({ "STATUS" => SEPARATOR,
                              "CONTENT" => line })
           @status = SEPARATOR
-
         elsif line =~ /^\s/
           case @status
           when HOST_ACCOUNT_START, HOST_ACCOUNT

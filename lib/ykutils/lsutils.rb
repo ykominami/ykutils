@@ -11,15 +11,15 @@ module Ykytils
       ary = str.split(/\s+/)
       perm = ary[0]
       @type = if perm[0].chr == "d"
-                :DIRECTORY
-              else
-                :FILE
-              end
+          :DIRECTORY
+        else
+          :FILE
+        end
       @perm = FilePermision.new(ary[0][1..9])
       @value = ary[1]
       @user = ary[2]
       @group = ary[3]
-      @size =  ary[4]
+      @size = ary[4]
       @month = ary[5]
       @day = ary[6]
       str = ary[7]

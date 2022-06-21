@@ -9,7 +9,6 @@ module Ykutils
       if RUBY_VERSION > "1.9"
         #      bn0.encode!( "internal" )
         bn0.encode! "UTF-8"
-
       end
       list = bn0.split(".")
       case list.size
