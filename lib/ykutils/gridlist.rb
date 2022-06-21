@@ -22,12 +22,6 @@ module Ykutils
     end
 
     def make_grid(template_hash, scope, min_row, max_row, min_colum, max_colum)
-=begin
-      p min_row
-      p max_row
-      p min_colum
-      p max_colum
-=end
       (min_row..max_row).map { |row|
         (min_colum..max_colum).map { |colum|
           #puts "#{row} #{colum}"
@@ -43,24 +37,12 @@ module Ykutils
     def make_grid_list()
       template_hash = TAMPLETES[:GRID_DEF]
       scope = nil
-=begin
-      min_row = 1
-      max_row = 2
-      min_colum = 1
-      max_colum = 5
-=end
       make_grid(template_hash, scope, min_row, max_row, min_colum, max_colum)
     end
 
     def make_grid_list_x(min_row, max_row, min_colum, max_colum)
       template_hash = TAMPLETES[:GRID_DEF]
       scope = nil
-=begin
-      p min_row
-      p max_row
-      p min_colum
-      p max_colum
-~end
       make_grid(template_hash, scope, min_row, max_row, min_colum, max_colum)
     end
   end
