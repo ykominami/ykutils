@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+require "ykutils"
+
+template_file_path = ARGV[0]
+value_file_path_array = [ARGV[1]]
+ind = 2
+while ARGV.size > ind
+  value_file_path_array << ARGV[ind]
+  ind += 1
+end
+
+scope = nil
+content = Ykutils::Erubyx::erubi_render_with_file(template_file_path, scope, value_file_path_array)
+puts content
