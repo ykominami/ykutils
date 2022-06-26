@@ -8,4 +8,5 @@ REM bundle exec ruby %TOP_DIR%\bin\erubix  %V103_DIR%\template_ssl.erb %A_DIR%\v
 REM bundle exec ruby %TOP_DIR%\bin\erubix  %V103_DIR%\template_ssl_www.erb %A_DIR%\value_host.yml %V103_DIR%\value_ssl.yml
 REM bundle exec ruby %TOP_DIR%\bin\erubix  %V103_DIR%\template.erb %A_DIR%\value_host.yml %V103_DIR%\value.yml
 REM bundle exec ruby %TOP_DIR%\bin\erubix  %V103_DIR%\template_www.erb %A_DIR%\value_host.yml %V103_DIR%\value.yml
-bundle exec ruby %TOP_DIR%\bin\erubix2  %A_DIR%\base.yml
+REM bundle exec ruby %TOP_DIR%\bin\erubix2  %A_DIR%\base.yml
+bundle exec ruby %TOP_DIR%\bin\erubix2  %1
