@@ -1,0 +1,22 @@
+server {
+    listen <%= ssl_port %>;
+    ssl_certificate <%= ssl_certificate %>;
+    ssl_certificate_key <%= ssl_certificate_key %>;
+    server_name  <%= host %>;
+
+    error_log   /var/www/vhosts/<%= host %>/statistics/logs/<%= error_log %>;
+    access_log   /var/www/vhosts/<%= host %>/statistics/logs/<%= access_log %>;
+
+#    rewrite_log on;
+
+    root   /var/www/vhosts/<%= host %>/httpdocs;
+    location  / {
+        index index.html;
+    }
+    error_page   500 502 503 504  /50x.html;
+    #error_page   500  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html/;
+        index 50x.html;
+    }
+}

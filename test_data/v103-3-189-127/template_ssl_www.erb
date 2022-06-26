@@ -1,0 +1,12 @@
+server {
+    listen <%= ssl_port %>;
+    server_name www.<%= host %>;
+        #
+    return 301 https://<%= host %>;
+
+    ssl_certificate <%= ssl_certificate %>;
+    ssl_certificate_key <%= ssl_certificate_key %>;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+}

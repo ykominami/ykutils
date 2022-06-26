@@ -1,0 +1,21 @@
+server {
+    if ($host = <%= host %>) {
+        return 301 https://$host$request_uri;
+    }
+
+    listen 80;
+    server_name  <%= host %>;
+
+    error_log   /var/www/vhosts/<%= host %>/statistics/logs/<%= error_log %>;
+    access_log   /var/www/vhosts/<%= host %>/statistics/logs/<%= access_log %>;
+
+    root   /var/www/vhosts/<%= host %>/httpdocs;
+    location / {
+        index index.html;
+    }
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html/;
+        index 50x.html;
+    }
+}

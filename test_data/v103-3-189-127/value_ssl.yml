@@ -1,0 +1,5 @@
+error_log: ssl_error_log
+access_log: ssl_access_log
+ssl_port: 443 ssl
+ssl_certificate: /etc/letsencrypt/live/v103-3-189-127.myvps.jp/fullchain.pem
+ssl_certificate_key: /etc/letsencrypt/live/v103-3-189-127.myvps.jp/privkey.pem

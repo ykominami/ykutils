@@ -1,0 +1,28 @@
+_root:
+  template: 4servers.erb
+server1:
+  protocol: ssl
+  template: template_ssl.erb
+  value:
+    - value_host.yml
+    - ../value_ssl.yml
+server2:
+  protocol: ssl
+  domain: www
+  template: template_ssl_www.erb
+  value:
+    - value_host.yml
+    - ../value_ssl.yml
+server3:
+  protocol:
+  template: template.erb
+  value:
+    - value_host.yml
+    - ../value.yml
+server4:
+  protocol:
+  domain: www
+  template: template_www.erb
+  value:
+    - value_host.yml
+    - ../value.yml
