@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 
 # Specify your gem's dependencies in ykutils.gemspec
-gemspec
+#gemspec
 
 gem "tilt"
 gem "erubi"
