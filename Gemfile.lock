@@ -53,9 +53,13 @@ GEM
     ruby-progressbar (1.11.0)
     tilt (2.0.10)
     unicode-display_width (2.1.0)
+    webrick (1.7.0)
+    yard (0.9.28)
+      webrick (~> 1.7.0)
 
 PLATFORMS
-  x64-mingw-ucrt
+  x64-mingw32
+  x64-unknown
 
 DEPENDENCIES
   erubi
@@ -65,7 +69,8 @@ DEPENDENCIES
   rubocop-rake
   rubocop-rspec
   tilt
+  yard
   ykutils!
 
 BUNDLED WITH
-   2.3.7
+   2.3.9

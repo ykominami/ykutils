@@ -27,14 +27,14 @@ module Ykutils
           #puts "#{row} #{colum}"
           value_hash = { row: row, colum: colum }
           #make_one_grid(template_hash, value_hash)
-          p template_hash
-          p value_hash
+          #p template_hash
+          #p value_hash
           Ykutils::Erubyx::erubi_render(template_hash, scope, value_hash)
         }
       }
     end
 
-    def make_grid_list()
+    def make_grid_list(min_row, max_row, min_colum, max_colum)
       template_hash = TAMPLETES[:GRID_DEF]
       scope = nil
       make_grid(template_hash, scope, min_row, max_row, min_colum, max_colum)

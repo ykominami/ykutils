@@ -26,6 +26,8 @@ require "ykutils/xlines"
 require "ykutils/yamlop"
 require "ykutils/yamlxop"
 
+require 'pathname'
 module Ykutils
+  TEST_DATA_DIR = Pathname.new(__dir__).parent + "test_data"
   # Your code goes here...
 end
