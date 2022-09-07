@@ -5,7 +5,7 @@ module Ykutils
   module Erubyx
     module_function
 
-    def erubi_render(template_hash, scope, value_hash)
+    def erubi_render(template_hash, scope, value_hash = {})
       unless template_hash[:OBJ]
         template_hash[:OBJ] = Tilt::ErubiTemplate.new{ template_hash[:TEMPLATE] }
       end
@@ -37,5 +37,19 @@ module Ykutils
       #puts value_hash
       erubi_render(template_hash, scope, value_hash)
     end
+
+    def erubi_render_with_template_file(template_file_path, scope, value_hash = {})
+      template_text = File.read(template_file_path)
+      template_hash = make_template_hash( template_text )
+      #puts value_hash
+      erubi_render(template_hash, scope, value_hash)
+    end
+
+#	private
+
+	def make_template_hash( text )
+      { TEMPLATE: text,
+        OBJ: nil}
+	end
   end
 end

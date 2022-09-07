@@ -3,10 +3,11 @@
 source "https://rubygems.org"
 
 # Specify your gem's dependencies in ykutils.gemspec
-#gemspec
+gemspec
 
 gem "tilt"
 gem "erubi"
+gem "filex"
 
 group :development, optional: true do
 	gem "rake", "~> 13.0"
