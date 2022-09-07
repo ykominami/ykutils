@@ -154,7 +154,7 @@ module Ykutils
       ary = []
       begin
         File.open(input_file_path, "r") do |file|
-          while line = file.gets
+          while (line = file.gets)
             line.chomp!
             ary << file_content_process(line)
           end
@@ -194,7 +194,7 @@ module Ykutils
       ary = []
       begin
         File.open(from_path, "r") do |file|
-          while line = file.gets
+          while (line = file.gets)
             line.chomp!
             ary << file_content_process(line)
           end

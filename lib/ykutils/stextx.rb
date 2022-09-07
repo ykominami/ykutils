@@ -23,7 +23,7 @@ module Ykutils
       def analyze_sub(lines)
         puts_current_method
 
-        while line = lines.get_line
+        while (line = lines.get_line)
           #      p line
         end
       end

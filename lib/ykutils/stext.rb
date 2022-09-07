@@ -66,6 +66,7 @@ module Ykutils
                 :main_sep_hash, :main_host_item_ary
 
     def initialize
+      super()
       @main_host_item_ary = []
 
       @main_sep_ary = []
@@ -73,7 +74,7 @@ module Ykutils
 
       @main_host_ary = []
       @main_host_hash = {}
-      1
+
       @main_domain_ary = []
       @main_domain_hash = {}
     end
@@ -89,7 +90,7 @@ module Ykutils
       host = StructuredTextForAccountOneLayerHost.new
       domain = StructuredTextForAccountOneLayerDomain.new
 
-      while line = lines.get_line
+      while (line = lines.get_line)
         case line["STATUS"]
         when AccountLines::HOST_ACCOUNT_START, AccountLines::HOST_ACCOUNT, AccountLines::HOST_ACCOUNT_END
           key, value = line["CONTENT"].split(":") if line["CONTENT"]
@@ -307,6 +308,7 @@ module Ykutils
     end
 
     def initialize
+      super()
       @item_ary = {}
     end
 
