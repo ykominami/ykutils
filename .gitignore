@@ -11,3 +11,7 @@
 .rspec_status
 *.conf
 checksum/
+awww.bat
+/checksums/
+d.bat
+/vendor/

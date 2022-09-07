@@ -641,10 +641,9 @@ Style/ZeroLengthPredicate:
   Exclude:
     - 'lib/ykutils/specfileop.rb'
     - 'lib/ykutils/stext.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, AllowedPatterns, IgnoredPatterns.
 # URISchemes: http, https
-Layout/LineLength:
-  Max: 133
+#Layout/LineLength:
+#  Max: 133
