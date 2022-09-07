@@ -10,7 +10,7 @@
 # rspec failure tracking
 .rspec_status
 *.conf
-checksum/
+/checksum/
 awww.bat
 /checksums/
 d.bat
