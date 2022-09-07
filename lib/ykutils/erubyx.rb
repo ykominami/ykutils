@@ -45,11 +45,9 @@ module Ykutils
       erubi_render(template_hash, scope, value_hash)
     end
 
-#	private
-
-	def make_template_hash( text )
-      { TEMPLATE: text,
-        OBJ: nil}
-	end
+    def make_template_hash( text )
+        { TEMPLATE: text,
+          OBJ: nil}
+    end
   end
 end
