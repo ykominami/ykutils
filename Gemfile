@@ -8,10 +8,9 @@ gemspec
 gem "erubi"
 gem "filex"
 gem "tilt"
+gem "rake", "~> 13.0"
 
 group :development, optional: true do
-  gem "rake", "~> 13.0"
-
   gem "yard"
 end
 
