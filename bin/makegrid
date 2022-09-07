@@ -11,11 +11,11 @@ require "ykutils"
 # require "pry"
 # Pry.start
 
-#require "irb"
-#IRB.start(__FILE__)
-#puts( make_grid(1 , 2) )
+# require "irb"
+# IRB.start(__FILE__)
+# puts( make_grid(1 , 2) )
 
-#puts Ykutils::Erubyx::make_grid_list()
+# puts Ykutils::Erubyx::make_grid_list()
 min_row = ARGV[0].to_i
 max_row = ARGV[1].to_i
 min_colum = ARGV[2].to_i

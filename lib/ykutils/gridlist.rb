@@ -2,7 +2,7 @@ require 'ykutils/erubyx'
 
 module Ykutils
   module Gridlist
-    TAMPLETES = { :GRID_DEF => 
+    TAMPLETES = { :GRID_DEF =>
       { :TEMPLATE => %!
     .g-<%= row %>-<%= colum %> {
       grid-row-start: <%= row %>;
@@ -10,25 +10,25 @@ module Ykutils
       grid-column-start: <%= colum %>;
       grid-column-end: <%= colum + 1 %>;
     }
-    ! , :OBJ => nil } }
+    !, :OBJ => nil } }
 
     module_function
 
     def make_one_grid(hash, row, colum)
       unless hash[:OBJ]
-        hash[:OBJ] = Tilt::ErubiTemplate.new{ hash[:TEMPLATE] }
+        hash[:OBJ] = Tilt::ErubiTemplate.new { hash[:TEMPLATE] }
       end
-      hash[:OBJ].render( Object.new, {row: row, colum: colum} )
+      hash[:OBJ].render(Object.new, { row: row, colum: colum })
     end
 
     def make_grid(template_hash, scope, min_row, max_row, min_colum, max_colum)
       (min_row..max_row).map { |row|
         (min_colum..max_colum).map { |colum|
-          #puts "#{row} #{colum}"
+          # puts "#{row} #{colum}"
           value_hash = { row: row, colum: colum }
-          #make_one_grid(template_hash, value_hash)
-          #p template_hash
-          #p value_hash
+          # make_one_grid(template_hash, value_hash)
+          # p template_hash
+          # p value_hash
           Ykutils::Erubyx::erubi_render(template_hash, scope, value_hash)
         }
       }

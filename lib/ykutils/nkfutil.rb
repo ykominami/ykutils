@@ -21,10 +21,10 @@ module Ykutils
 
       def self.set(key, value)
         @@hs[key] = if value
-            Assoc.convert(value)
-          else
-            value
-          end
+                      Assoc.convert(value)
+                    else
+                      value
+                    end
       end
 
       def self.get(key)
@@ -46,7 +46,8 @@ module Ykutils
       end
 
       def self.auto_config_to_inner(str, misc_option = nil)
-        src_encoding = if str
+        src_encoding =
+          if str
             Assoc.to_nkf_encoding_format(NKFUTIL.guess_encoding(str))
           else
             "A"
@@ -135,7 +136,7 @@ module Ykutils
     def nkf_utf8_file(infname, outfname)
       File.open(outfname) do |outf|
         File.open(infname) do |file|
-          while line = file.gets
+          while (line = file.gets)
             line.chomp!
             oline = NKF.nkf("-w -m0", line)
             outf.printf("%s\n", oline)

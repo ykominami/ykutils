@@ -6,10 +6,10 @@ module Ykutils
 
     def self.runtime
       @@os ||= if Pathname.pwd.to_s =~ %r{^/cygdrive}
-          :CYGWIN
-        else
-          :ELSE
-        end
+                 :CYGWIN
+               else
+                 :ELSE
+               end
       @@os
     end
   end

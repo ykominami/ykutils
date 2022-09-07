@@ -37,18 +37,16 @@ module Ykutils
       CODE_TO_NAME[str.encoding.to_s]
     end
 
-    def self.config(src_encoding, dest_encoding, misc_option = nil); end
-
     class Assoc
       @@hs = {}
       @@config = nil
 
       def self.set(key, value)
         @@hs[key] = if value
-            Assoc.convert(value)
-          else
-            value
-          end
+                      Assoc.convert(value)
+                    else
+                      value
+                    end
       end
 
       def self.get(key)
@@ -65,10 +63,10 @@ module Ykutils
 
       def self.auto_config_to_inner(str, _misc_option = nil)
         src_encoding = if str
-            Assoc.to_nkf_encoding_format(NKFUTIL.guess_encoding(str))
-          else
-            "US-ASCII"
-          end
+                         Assoc.to_nkf_encoding_format(NKFUTIL.guess_encoding(str))
+                       else
+                         "US-ASCII"
+                       end
 
         #      inner_encoding = Assoc.to_nkf_encoding_format( Assoc.get_inner_encoding )
         #      if inner_encoding != "US-ASCII"
@@ -156,7 +154,7 @@ module Ykutils
     def nkf_utf8_file(infname, outfname)
       File.open(outfname) do |outf|
         File.open(infname) do |file|
-          while line = file.gets
+          while (line = file.gets)
             line.chomp!
             #          oline = NKF.nkf( "-w -m0" , line )
             oline = line.encode(NAME_TO_ENCODING["UTF8"])

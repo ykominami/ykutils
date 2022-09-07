@@ -40,9 +40,7 @@ module Ykutils
 
     def initialize(ret, bool, mes)
       @val = { "ret" => ret, "bool" => bool, "mes" => mes }
-      @ret = ret
-      @bool = bool
-      @mes = mes
+      super(@val)
     end
   end
 end

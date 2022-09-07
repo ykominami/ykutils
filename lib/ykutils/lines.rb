@@ -50,7 +50,7 @@ module Ykutils
     ETC = 100
 
     def setup
-      while line = @lines.get_line
+      while (line = @lines.get_line)
         next if line.strip == ""
 
         if line =~ /^---/
