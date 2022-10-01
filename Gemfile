@@ -8,16 +8,15 @@ gemspec
 gem "erubi"
 gem "filex"
 gem "rake", "~> 13.0"
-gem "rspec", "~> 3.0"
-gem "rubocop", "~> 1.21"
-gem "rubocop-rake"
-gem "rubocop-rspec"
 gem "tilt"
 
 group :development, optional: true do
   gem "yard"
 end
 
-# group :test, optional: true do
-#
-# end
+group :test, optional: true do
+  gem "rspec", "~> 3.0"
+  gem "rubocop", "~> 1.21"
+  gem "rubocop-rake"
+  gem "rubocop-rspec"
+end
