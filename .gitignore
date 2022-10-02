@@ -15,3 +15,6 @@ awww.bat
 /checksums/
 d.bat
 /vendor/
+*.code-workspace
+.ruby-version
+
