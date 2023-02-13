@@ -1,4 +1,4 @@
-module Ykutils
+module Ykxutils
   require 'find'
   class Nginxconfigfiles
     def get_file_list(start_dir, re)
