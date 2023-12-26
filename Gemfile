@@ -16,7 +16,7 @@ end
 
 group :test, optional: true do
   gem "rspec", "~> 3.12"
-  gem "rubocop", "~> 1.21"
+  gem "rubocop", "~> 1.50"
   gem "rubocop-rake"
   gem "rubocop-rspec"
 end
