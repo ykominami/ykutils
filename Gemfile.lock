@@ -57,7 +57,7 @@ GEM
     rubocop-rspec (2.17.1)
       rubocop (~> 1.33)
     ruby-progressbar (1.13.0)
-    tilt (2.0.11)
+    tilt (2.3.0)
     unicode-display_width (2.5.0)
     webrick (1.7.0)
     yard (0.9.28)
