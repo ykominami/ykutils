@@ -7,7 +7,7 @@ gemspec
 
 gem "erubi"
 gem "filex"
-gem "rake", "~> 13.0"
+gem "rake", "~> 13.1"
 gem "tilt"
 
 group :development, optional: true do
