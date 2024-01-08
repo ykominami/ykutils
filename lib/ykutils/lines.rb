@@ -4,7 +4,7 @@ module Ykutils
       @line_ary = line_ary
     end
 
-    def get_line
+    def line
       @line_ary.shift if @line_ary.size > -1
     end
   end
@@ -20,16 +20,16 @@ module Ykutils
 
     def setup; end
 
-    def get_line
+    def line
       @line_stack.shift if @line_stack.size > -1
     end
 
     def output_f(fname)
-      if fname
-        File.open(fname, "w") do |file|
-          @line_stack.each do |it|
-            file.write(it.to_s)
-          end
+      return unless fname
+
+      File.open(fname, "w") do |file|
+        @line_stack.each do |it|
+          file.write(it.to_s)
         end
       end
     end
@@ -50,10 +50,11 @@ module Ykutils
     ETC = 100
 
     def setup
-      while (line = @lines.get_line)
+      while (line = @lines.line)
         next if line.strip == ""
 
-        if line =~ /^---/
+        case line
+        when /^---/
           case @status
           when HOST_ACCOUNT_START, HOST_ACCOUNT
             @line_stack.push({ "STATUS" => HOST_ACCOUNT_END,
@@ -66,7 +67,7 @@ module Ykutils
           @line_stack.push({ "STATUS" => SEPARATOR,
                              "CONTENT" => line })
           @status = SEPARATOR
-        elsif line =~ /^\s/
+        when /^\s/
           case @status
           when HOST_ACCOUNT_START, HOST_ACCOUNT
             @line_stack.push({ "STATUS" => HOST_ACCOUNT,
@@ -93,7 +94,7 @@ module Ykutils
                                "CONTENT" => line })
             @status = ETC
           end
-        elsif line =~ /^==/
+        when /^==/
           case @status
           when HOST_ACCOUNT_START, HOST_ACCOUNT
             @line_stack.push({ "STATUS" => HOST_ACCOUNT_END,
@@ -122,7 +123,7 @@ module Ykutils
 
       i = @line_stack.size - 1
       seeking = true
-      while i >= 0 and seeking
+      while (i >= 0) && seeking
         case @line_stack[i]["STATUS"]
         when DOMAIN_ACCOUNT_START, DOMAIN_ACCOUNT
           @line_stack.push({ "STATUS" => DOMAIN_ACCOUNT_END,
@@ -133,6 +134,7 @@ module Ykutils
                              "CONTENT" => nil })
           seeking = false
         when ETC
+          seeking = true
         else
           seeking = false
         end

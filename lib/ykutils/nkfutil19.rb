@@ -22,7 +22,7 @@ module Ykutils
 
     begin
       NAME_TO_ENCODING
-    rescue => ex
+    rescue StandardError
       NAME_TO_ENCODING = Hash.new("US-ASCII")
       NAME_TO_ENCODING["UTF8"] = "UTF-8"
       NAME_TO_ENCODING["ASCII"] = "US-ASCII"
@@ -38,19 +38,19 @@ module Ykutils
     end
 
     class Assoc
-      @@hs = {}
-      @@config = nil
+      @hs = {}
+      @config = nil
 
       def self.set(key, value)
-        @@hs[key] = if value
-                      Assoc.convert(value)
-                    else
-                      value
-                    end
+        @hs[key] = if value
+                     Assoc.convert(value)
+                     # else
+                     #  value
+                   end
       end
 
       def self.get(key)
-        @@hs[key]
+        @hs[key]
       end
 
       def self.to_nkf_encoding_format(encoding)
@@ -58,7 +58,7 @@ module Ykutils
       end
 
       def self.config(_src_encoding, dest_encoding, _misc_option = nil)
-        @@config = dest_encoding
+        @config = dest_encoding
       end
 
       def self.auto_config_to_inner(str, _misc_option = nil)
@@ -70,8 +70,8 @@ module Ykutils
 
         #      inner_encoding = Assoc.to_nkf_encoding_format( Assoc.get_inner_encoding )
         #      if inner_encoding != "US-ASCII"
-        #      @@config = inner_encoding
-        @@config = nil
+        #      @config = inner_encoding
+        @config = nil
         #      end
         src_encoding
       end
@@ -80,20 +80,20 @@ module Ykutils
         dest_encoding = Assoc.to_nkf_encoding_format(dest_enc)
         #      inner_encoding = Assoc.to_nkf_encoding_format( Assoc.get_inner_encoding )
         #      if inner_encoding != "US-ASCII"
-        #      @@config = dest_encoding.downcase
-        @@config = dest_encoding
+        #      @config = dest_encoding.downcase
+        @config = dest_encoding
         #      end
       end
 
       def self.convert(str)
         nstr = nil
         unless str.nil?
-          if @@config.nil?
+          if @config.nil?
             nstr = str
           else
             begin
               #            nstr = NKF.nkf( @@config , str )
-              nstr = str.encode(@@config)
+              nstr = str.encode(@config)
             rescue StandardError => e
               puts e
               puts "========="

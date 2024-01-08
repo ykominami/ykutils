@@ -13,5 +13,5 @@ while ARGV.size > ind
 end
 
 scope = nil
-content = Ykutils::Erubyx::erubi_render_with_file(template_file_path, scope, value_file_path_array)
+content = Ykutils::Erubyx.erubi_render_with_file(template_file_path, scope, value_file_path_array)
 puts content

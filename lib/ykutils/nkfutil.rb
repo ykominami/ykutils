@@ -16,19 +16,19 @@ module Ykutils
     end
 
     class Assoc
-      @@hs = {}
-      @@config = nil
+      @hs = {}
+      @config = nil
 
       def self.set(key, value)
-        @@hs[key] = if value
-                      Assoc.convert(value)
-                    else
-                      value
-                    end
+        @hs[key] = if value
+                     Assoc.convert(value)
+                   else
+                     value
+                   end
       end
 
       def self.get(key)
-        @@hs[key]
+        @hs[key]
       end
 
       def self.to_nkf_encoding_format(encoding)
@@ -41,8 +41,8 @@ module Ykutils
       end
 
       def self.config(src_encoding, dest_encoding, misc_option = nil)
-        @@config = "-#{dest_encoding.to_s[0, 1].downcase}#{src_encoding.to_s[0, 1].upcase}"
-        @@config += " #{misc_option}" unless misc_option.nil?
+        @config = "-#{dest_encoding.to_s[0, 1].downcase}#{src_encoding.to_s[0, 1].upcase}"
+        @config += " #{misc_option}" unless misc_option.nil?
       end
 
       def self.auto_config_to_inner(str, misc_option = nil)
@@ -55,8 +55,8 @@ module Ykutils
 
         inner_encoding = Assoc.to_nkf_encoding_format(Assoc.get_inner_encoding)
         if inner_encoding != "A"
-          @@config = "-#{inner_encoding.downcase}#{src_encoding.upcase}"
-          @@config += " #{misc_option}" unless misc_option.nil?
+          @config = "-#{inner_encoding.downcase}#{src_encoding.upcase}"
+          @config += " #{misc_option}" unless misc_option.nil?
         end
         src_encoding
       end
@@ -64,20 +64,20 @@ module Ykutils
       def self.auto_config_from_inner(dest_enc, misc_option = nil)
         dest_encoding = Assoc.to_nkf_encoding_format(dest_enc)
         inner_encoding = Assoc.to_nkf_encoding_format(Assoc.get_inner_encoding)
-        if inner_encoding != "A"
-          @@config = "-#{dest_encoding.downcase}#{inner_encoding.upcase}"
-          @@config += " #{misc_option}" unless misc_option.nil?
-        end
+        return unless inner_encoding != "A"
+
+        @config = "-#{dest_encoding.downcase}#{inner_encoding.upcase}"
+        @config += " #{misc_option}" unless misc_option.nil?
       end
 
       def self.convert(str)
         nstr = nil
         unless str.nil?
-          if @@config.nil?
+          if @config.nil?
             nstr = str
           else
             begin
-              nstr = NKF.nkf(@@config, str)
+              nstr = NKF.nkf(@config, str)
             rescue StandardError => e
               puts e
               puts "========="
@@ -88,8 +88,8 @@ module Ykutils
         nstr
       end
 
-      def self.get_inner_encoding
-        @@inner_encoding = $KCODE == "NONE" ? "ASCII" : $KCODE
+      def self.inner_encoding
+        @inner_encoding = $KCODE == "NONE" ? "ASCII" : $KCODE
       end
     end
 

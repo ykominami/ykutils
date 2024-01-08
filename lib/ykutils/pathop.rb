@@ -6,7 +6,7 @@ module Ykutils
       one_path = Pathname.new(fname).expand_path
       dir_path = one_path.dirname
       base_path = one_path.basename(".*")
-      append_name = "-2" unless append_name.empty? or extname.empty?
+      append_name = "-2" unless append_name.empty? || extname.empty?
       extname ||= one_path.extname
 
       [one_path, dir_path.join(base_path.to_s + append_name + extname)]
@@ -19,10 +19,11 @@ module Ykutils
     def determine_fname_for_update2(fname)
       begin
         ctime = File.ctime(fname)
-      rescue StandardError => e
+      rescue YkutilsError => e
+        puts e
       end
       ctime ||= Time.now
-      ary = ctime.to_s.split(" ")
+      ary = ctime.to_s.split
       extname = File.extname(fname)
       append = ["", ary[0], ary[1].gsub(":", "-")].join("-")
       get_buddy_path(fname, append, extname)

@@ -5,9 +5,7 @@ module Ykytils
   class DirEntryItem
     attr_accessor :name, :user, :group, :size, :month, :day, :time, :year, :path, :type, :parent_dir, :valid
 
-    def initialize; end
-
-    def parse(str, parent_dir, valid = true)
+    def parse(str, parent_dir, valid: true)
       ary = str.split(/\s+/)
       perm = ary[0]
       @type = if perm[0].chr == "d"
@@ -49,11 +47,11 @@ module Ykytils
     end
 
     def directory?
-      @type === :DIRECTORY
+      @type == :DIRECTORY
     end
 
     def file?
-      @type === :FILE
+      @type == :FILE
     end
 
     def owner_perm

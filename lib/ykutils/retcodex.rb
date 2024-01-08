@@ -1,6 +1,7 @@
 module Ykutils
   class RetCode
-    attr_reader :val, :mes, :ret, :bool
+    attr_reader :val
+    attr_accessor :bool, :mes, :ret
 
     def initialize(obj)
       @val = obj
@@ -15,22 +16,6 @@ module Ykutils
 
     def to_s
       @bool
-    end
-
-    def set_bool(val)
-      @bool = val
-    end
-
-    def get_bool
-      @bool
-    end
-
-    def set_mes(val)
-      @mes = val
-    end
-
-    def set_ret(val)
-      @ret = val
     end
   end
 

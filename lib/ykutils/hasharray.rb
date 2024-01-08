@@ -34,7 +34,7 @@ module Ykutils
     def replace(*args)
       super(*args)
       @ary = super.keys
-      @ary ||= []
+      @replace ||= []
     end
 
     def delete(ind, &block)
@@ -48,10 +48,6 @@ module Ykutils
         @ary.delete(it) if block.call(it, self[it])
       end
 
-      super
-    end
-
-    def reject(&block)
       super
     end
   end

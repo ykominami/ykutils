@@ -23,7 +23,7 @@ RSpec.describe Ykutils do
       max_row = 2
       min_colum = 1
       max_colum = 5
-      expect(Ykutils::Gridlist::make_grid_list(min_row, max_row, min_colum, max_colum).instance_of?(Array)).to be true
+      expect(Ykutils::Gridlist.make_grid_list(min_row, max_row, min_colum, max_colum).instance_of?(Array)).to be true
     end
 
     def make_path_complement(path)
@@ -44,12 +44,11 @@ RSpec.describe Ykutils do
 
       scope = nil
       ary = ["a.northern-cross.net/value_host.yml", "value_ssl.yml"]
-      value_file_path_array = ary.reduce([]) { |list, path|
+      value_file_path_array = ary.each_with_object([]) do |path, list|
         list << make_path_complement(path)
-        list
-      }
+      end
 
-      content = Ykutils::Erubyx::erubi_render_with_file(template_file_path, scope, value_file_path_array)
+      content = Ykutils::Erubyx.erubi_render_with_file(template_file_path, scope, value_file_path_array)
       expect(content).to_not be_nil
     end
   end

@@ -18,23 +18,23 @@ module Ykutils
     def extract(scope)
       hashx = {}
       @hash.each do |k, v|
-        if k !~ /^_/
-          # puts k
-          # puts v
-          pn = Pathname.new(v["template"]).cleanpath
-          # Pathname.new(v).cleanpath
-          template_pn = @server_dir_pn + pn
-          # puts(template_pn)
-          value_file_path_array = v["value"].map { |x|
-            @virtual_domain_dir_pn + Pathname.new(x).cleanpath
-          }
-          hashx[k] = Ykutils::Erubyx::erubi_render_with_file(template_pn, scope, value_file_path_array)
+        next unless k !~ /^_/
+
+        # puts k
+        # puts v
+        pn = Pathname.new(v["template"]).cleanpath
+        # Pathname.new(v).cleanpath
+        template_pn = @server_dir_pn + pn
+        # puts(template_pn)
+        value_file_path_array = v["value"].map do |x|
+          @virtual_domain_dir_pn + Pathname.new(x).cleanpath
         end
+        hashx[k] = Ykutils::Erubyx.erubi_render_with_file(template_pn, scope, value_file_path_array)
       end
       template = File.read(@root_template_pn)
       template_hash = { TEMPLATE: template,
                         OBJ: nil }
-      Ykutils::Erubyx::erubi_render(template_hash, scope, hashx)
+      Ykutils::Erubyx.erubi_render(template_hash, scope, hashx)
     end
   end
 end

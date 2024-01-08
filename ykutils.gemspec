@@ -33,12 +33,12 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
-  spec.add_dependency  "erubi"
-  spec.add_dependency  "filex"
-  spec.add_dependency  "tilt"
+  # spec.add_dependency  "erubi"
+  # spec.add_dependency  "filex"
+  # spec.add_dependency  "tilt"
   # spec.add_development_dependency "rubocop-rake"
   # spec.add_development_dependency "rubocop-rspec"
-  spec.add_development_dependency 'yard'
+  # spec.add_development_dependency 'yard'
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html

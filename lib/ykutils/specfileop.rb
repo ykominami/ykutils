@@ -1,6 +1,5 @@
 # -*- coding utf-8 -*-
 
-require "pp"
 require "yaml"
 require "csv"
 require "ykutils/treemanagera"
@@ -63,7 +62,7 @@ module Ykutils
 
     def parse_yaml_file(fname)
       begin
-        @data = YAML.parse(File.read(fname))
+        @data = YAML.parse_file(fname)
       rescue StandardError => e
         pp e
         pp e.backtrace
@@ -82,7 +81,7 @@ module Ykutils
         v.scan(re).flatten.each do |it|
           if it
             tm.add(it, k)
-            tm.addTag(k, it)
+            tm.tag(k, it)
           else
             tm.add(nil, k)
           end
@@ -92,10 +91,9 @@ module Ykutils
       tm.tsort.reverse.each do |k|
         next unless data[k]
 
-        tag = tm.getTag(k)
+        tag = tm.tag(k)
         next unless tag
 
-        i = 0
         tag.each do |it|
           ntag = Regexp.new(separator + it + separator)
           data[k] = data[k].sub(ntag, data[it]) if data[it]
@@ -107,12 +105,12 @@ module Ykutils
 
         ary = v.scan(re).flatten
         i = 0
-        if ary and ary.size > 0
+        if ary && !ary.empty?
           except_ary.each do |it|
             i += 1 unless ary.index(it)
           end
         end
-        if i > 0
+        if i.positive?
           puts "#{k} fails to exapnd data. value is #{v}"
           @valid = false
         end
@@ -123,7 +121,7 @@ module Ykutils
 
     def make_data_complement(item_ary, data, common)
       item_ary.each do |it|
-        data[it] = common[it] unless data[it] and data[it].strip != ""
+        data[it] = common[it] unless data[it] && (data[it].strip != "")
       end
     end
 
@@ -182,9 +180,9 @@ module Ykutils
 
       begin
         ary0 = File.readlines(fname)
-        senc = NKFUTIL.auto_config_to_inner(ary0.join)
+        NKFUTIL.auto_config_to_inner(ary0.join)
 
-        ary = ary0.select { |x| !x.nil? }.collect do |x|
+        ary = ary0.compact.collect do |x|
           if x.nil?
             ""
           else
