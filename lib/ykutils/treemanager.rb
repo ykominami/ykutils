@@ -23,7 +23,7 @@ module Ykytils
 
     def tsort_each_child(node, &block)
       ary = @table[node]
-      ary.each(&block) if ary
+      ary&.each(&block)
     end
 
     def tsort_each_node(&block)

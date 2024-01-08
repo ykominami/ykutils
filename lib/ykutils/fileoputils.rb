@@ -84,7 +84,7 @@ module Ykutils
 
     def valid_readable_fname?(fname)
       ret = false
-      ret = true if normal_string?(fname) and File.file?(fname) and File.readable?(fname)
+      ret = true if normal_string?(fname) && File.file?(fname) && File.readable?(fname)
       ret
     end
 
@@ -130,7 +130,7 @@ module Ykutils
           ret = true if File.writable?(fname)
         else
           unless File.directory?(fname)
-            dir, filename = File.split(fname)
+            dir, = File.split(fname)
             ret = valid_writable_directory?(dir)
           end
         end
@@ -164,33 +164,33 @@ module Ykutils
         pp e.traceback
         @valid = false
       end
-      if @valid
-        content = ary.join("\n")
-        begin
-          output_file.write(content)
-        rescue StandardError => e
-          pp e
-          pp e.traceback
-          @valid = false
-        end
+      return unless @valid
+
+      content = ary.join("\n")
+      begin
+        output_file.write(content)
+      rescue StandardError => e
+        pp e
+        pp e.traceback
+        @valid = false
       end
     end
 
-    def rewrite_file(from_path_1, from_path_2, to_path_1, to_path_2)
+    def rewrite_file(from_path1, from_path2, to_path1, to_path2)
       d_p("rewrite_file")
-      d_p("from_path_1=#{from_path_1}")
-      d_p("from_path_2=#{from_path_2}")
-      d_p("to_path_1=#{to_path_1}")
-      d_p("to_path_2=#{to_path_2}")
+      d_p("from_path_1=#{from_path1}")
+      d_p("from_path_2=#{from_path2}")
+      d_p("to_path_1=#{to_path1}")
+      d_p("to_path_2=#{to_path2}")
 
-      mes = prepare_file_copy(from_path_1, from_path_2, to_path_1, to_path_2)
+      mes = prepare_file_copy(from_path1, from_path2, to_path1, to_path2)
 
       puts_no_empty(mes)
 
       return false unless @valid
 
-      from_path = File.join(from_path_1, from_path_2)
-      to_path = File.join(to_path_1, to_path_2)
+      from_path = File.join(from_path1, from_path2)
+      to_path = File.join(to_path1, to_path2)
       ary = []
       begin
         File.open(from_path, "r") do |file|
@@ -218,66 +218,66 @@ module Ykutils
       end
     end
 
-    def prepare_file_copy(from_path_1, from_path_2, to_path_1, to_path_2)
+    def prepare_file_copy(from_path1, from_path2, to_path1, to_path2)
       mes = ""
 
       d_p("prepare_file_copy")
-      d_p("from_path_1=#{from_path_1}")
-      d_p("from_path_2=#{from_path_2}")
-      d_p("to_path_1=#{to_path_1}")
-      d_p("to_path_2=#{to_path_2}")
+      d_p("from_path_1=#{from_path1}")
+      d_p("from_path_2=#{from_path2}")
+      d_p("to_path_1=#{to_path1}")
+      d_p("to_path_2=#{to_path2}")
 
-      if prepare_source_dir(from_path_1, from_path_2)
-        unless prepare_dest_dir(to_path_1, to_path_2)
-          mes = "Can't write #{to_path_1}/#{to_path_1}"
+      if prepare_source_dir(from_path1, from_path2)
+        unless prepare_dest_dir(to_path1, to_path2)
+          mes = "Can't write #{to_path1}/#{to_path1}"
           d_caller(0)
           @valid = false
         end
       else
-        mes = "Can't read #{from_path_1}/#{from_path_2}"
+        mes = "Can't read #{from_path1}/#{from_path2}"
         @valid = false
       end
 
       mes
     end
 
-    def prepare_source_dir(from_path_1, from_path_2)
+    def prepare_source_dir(from_path1, from_path2)
       state = false
-      from_path = File.join(from_path_1, from_path_2)
-      if valid_readable_directory?(from_path_1)
-        dirname, filename = File.split(from_path)
+      from_path = File.join(from_path1, from_path2)
+      if valid_readable_directory?(from_path1)
+        dirname, = File.split(from_path)
         state = true if valid_readable_directory?(dirname) && valid_readable_fname?(from_path)
       end
       state
     end
 
-    def prepare_dest_dir(to_path_1, to_path_2)
+    def prepare_dest_dir(to_path1, to_path2)
       state = true
-      unless valid_writable_directory?(to_path_1)
-        if File.exist?(to_path_1)
+      unless valid_writable_directory?(to_path1)
+        if File.exist?(to_path1)
           d_caller(0)
           return false
         end
 
         begin
-          FileUtils.mkdir_p(to_path_1)
+          FileUtils.mkdir_p(to_path1)
         rescue StandardError => e
           state = false
           pp e
           pp e.traceback
         end
       end
-      unless valid_writable_directory?(to_path_1)
+      unless valid_writable_directory?(to_path1)
         d_caller(0)
         return false
       end
 
-      to_path = File.join(to_path_1, to_path_2)
-      dirname, filename = File.split(to_path)
+      to_path = File.join(to_path1, to_path2)
+      dirname, = File.split(to_path)
       unless File.exist?(dirname)
         begin
           FileUtils.mkdir_p(dirname)
-        rescue StandardError => e
+        rescue StandardError
           state = false
           pp caller(0)
         end
@@ -301,22 +301,22 @@ module Ykutils
       true
     end
 
-    def copy_file(from_path_1, from_path_2, to_path_1, to_path_2)
+    def copy_file(from_path1, from_path2, to_path1, to_path2)
       retry_flag = false
       begin
-        from_path = File.join(from_path_1, from_path_2)
-        to_path = File.join(to_path_1, to_path_2)
+        from_path = File.join(from_path1, from_path2)
+        to_path = File.join(to_path1, to_path2)
         FileUtils.cp(from_path, to_path)
         d_puts("Copy #{from_path} -> #{to_path}")
-      rescue StandardError => e
-        retry_flag = prepare_file_copy(from_path_1, from_path_2, to_path_1, to_path_2)
+      rescue StandardError
+        retry_flag = prepare_file_copy(from_path1, from_path2, to_path1, to_path2)
       end
 
       if retry_flag
         begin
           FileUtils.cp(from_path, to_path)
           d_puts("Copy #{from_path} -> #{to_path}")
-        rescue StandardError => e
+        rescue StandardError
           @valid = false
         end
       end
@@ -331,8 +331,8 @@ module Ykutils
       d_p(ary)
       d_p(left)
       if left
-        sub_ary = ary[(left + 1)..-1]
-        ret = true if sub_ary && sub_ary.index(filename)
+        sub_ary = ary[(left + 1)..]
+        ret = true if sub_ary&.index(filename)
       end
 
       ret
@@ -376,20 +376,20 @@ module Ykutils
       dirname.join(basename.to_s + add_string + extname.to_s)
     end
 
-    def determine_encoding(pn)
+    def determine_encoding(pathn)
       encodings = [Encoding::UTF_8, Encoding::EUC_JP, Encoding::Shift_JIS, Encoding::CP932]
 
       valid_enc = nil
       encodings.each do |enc|
         next if valid_enc
 
-        s = pn.expand_path.read(encoding: enc)
+        s = pathn.expand_path.read(encoding: enc)
         next unless s.valid_encoding?
 
         begin
-          cs = s.encode(Encoding::CP932)
+          s.encode(Encoding::CP932)
           valid_enc = enc
-        rescue StandardError => e
+        rescue StandardError
           #        puts "Conversion Error! #{y}"
           #            puts y
         end

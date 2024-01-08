@@ -29,7 +29,7 @@ module Ykutils
     end
 
     def to_hash
-      h = { "owner" => @owner.to_hash, "group" => @group.to_hash, "other" => @other.to_hash }
+      { "owner" => @owner.to_hash, "group" => @group.to_hash, "other" => @other.to_hash }
     end
   end
 end

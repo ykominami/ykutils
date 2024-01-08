@@ -4,8 +4,8 @@ module Ykutils
       str || ""
     end
 
-    def get_basename_ext(it)
-      bn0 = it.basename.to_s
+    def get_basename_ext(itx)
+      bn0 = itx.basename.to_s
       if RUBY_VERSION > "1.9"
         #      bn0.encode!( "internal" )
         bn0.encode! "UTF-8"
@@ -48,7 +48,7 @@ module Ykutils
       content_ary = []
 
       reg_hash = {}
-      tag_value_hash.each do |k, _v|
+      tag_value_hash.each_key do |k|
         reg_hash[k] = Regexp.new(separator + k + separator)
       end
 
@@ -61,17 +61,17 @@ module Ykutils
       content_ary
     end
 
-    def indent(n)
+    def indent(num)
       n ||= 0
       @indent_hash ||= {}
-      @indent_hash[n] ||= " " * n
-      @indent_hash[n]
+      @indent_hash[num] ||= " " * n
+      @indent_hash[num]
     end
 
     def print_hier(data, level)
       case data.class.to_s
       when "Hash"
-        data.each do |_k, v|
+        data.each_value do |v|
           #        puts "#{indent(level)}#{k}|#{v.class} #{if v.class.to_s == 'String' then v.size else '' end }"
           #        puts "#{indent(level)}#{k}|#{v.class}"
           print_hier(v, level + 1)
@@ -80,12 +80,12 @@ module Ykutils
         data.each do |v|
           print_hier(v, level + 1)
         end
-      else
+        # else
         #      puts "#{indent(level)}|#{data.class}"
       end
     end
 
-    def print_hier_2(data, level)
+    def print_hier2(data, level)
       case data.class.to_s
       when "Hash"
         data.each do |k, v|
@@ -93,8 +93,8 @@ module Ykutils
           str = "#{indent(level)}#{k}|#{v.class}"
           if v.instance_of?(Array)
             num = v.size
-            str += ("|" + num.to_s)
-            str += "###################" if num > 1
+            str += "|#{num}"
+            "#{str}###################" if num > 1
           end
           #        puts str
           print_hier_2(v, level + 1) if k != "group"
@@ -103,7 +103,7 @@ module Ykutils
         data.each do |v|
           print_hier_2(v, level + 1)
         end
-      else
+        # else
         #      puts "#{indent(level)}|#{data.class}"
       end
     end

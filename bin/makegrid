@@ -20,4 +20,4 @@ min_row = ARGV[0].to_i
 max_row = ARGV[1].to_i
 min_colum = ARGV[2].to_i
 max_colum = ARGV[3].to_i
-puts Ykutils::Gridlist::make_grid_list_x(min_row, max_row, min_colum, max_colum)
+puts Ykutils::Gridlist.make_grid_list_x(min_row, max_row, min_colum, max_colum)

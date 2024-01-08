@@ -1,14 +1,12 @@
-require 'tilt'
-require 'yaml'
+require "tilt"
+require "yaml"
 
 module Ykutils
   module Erubyx
     module_function
 
     def erubi_render(template_hash, scope, value_hash = {})
-      unless template_hash[:OBJ]
-        template_hash[:OBJ] = Tilt::ErubiTemplate.new { template_hash[:TEMPLATE] }
-      end
+      template_hash[:OBJ] = Tilt::ErubiTemplate.new { template_hash[:TEMPLATE] } unless template_hash[:OBJ]
       template_hash[:OBJ].render(scope, value_hash)
     end
 
@@ -25,14 +23,14 @@ module Ykutils
       template_text = File.read(template_file_path)
       template_hash = { TEMPLATE: template_text,
                         OBJ: nil }
-      value_hash = value_file_path_array.reduce({}) { |hash, path|
+      value_hash = value_file_path_array.reduce({}) do |hash, path|
         # p path
         hash0 = YAML.load_file(path)
         # p hash0
         hash = hash.merge(hash0)
         # p hash
         hash
-      }
+      end
       # puts value_hash
       erubi_render(template_hash, scope, value_hash)
     end

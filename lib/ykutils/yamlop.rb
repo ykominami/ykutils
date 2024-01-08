@@ -12,7 +12,7 @@ module Ykutils
     TEST_ID_NO_VALUE = 0
     TEST_ID_LISTUP_ALL = 1
 
-    def initialize(opts = {}, _argv = [], _debug = false)
+    def initialize(opts = {}, _argv = [], _debug: false)
       @fname = nil
       @check_flag = opts["check"]
       @ifname = opts["input_file"]
@@ -30,7 +30,7 @@ module Ykutils
     def exec
       if @reform_flag
         reform
-      elsif @test_id > 0
+      elsif @test_id.positive?
         case @test_id
         when TEST_ID_LISTUP_ALL
           test_listup
@@ -104,8 +104,8 @@ module Ykutils
 
     def import(fname)
       ret = false
-      if File.file?(fname) and File.readable?(fname)
-        @ptext = load_plain_text_file(fname).collect { |it| it.chomp }
+      if File.file?(fname) && File.readable?(fname)
+        @ptext = load_plain_text_file(fname).collect(&:chomp)
         ret = false
       end
       ret
@@ -115,10 +115,9 @@ module Ykutils
       ret = import(fname)
       if ret
         @ptext_hash = {}
-        i = 0
         @ptext_hash = make_hash(@ptext, 0) do |l, i|
-          if l !~ /^\s/ and l !~ /^==/
-            key, vale = l.split(":")
+          if l !~ (/^\s/) && l !~ (/^==/)
+            key, = l.split(":")
             [key, { "CONTENT" => l, "INDEX" => i }]
           end
         end
@@ -136,14 +135,14 @@ module Ykutils
     end
 
     def listup_domain
-      @ptext.select { |l| l =~ /^==/ }
+      @ptext.grep(/^==/)
     end
 
     def output_yaml(obj, fname)
       File.open(fname, "w") do |file|
         YAML.dump(obj, file)
       end
-    rescue StandardError => e
+    rescue YkutilsError => e
       pp e
       pp e.backtrace
       @valid = false
@@ -165,19 +164,19 @@ module Ykutils
       File.open(fname, "w") do |file|
         @yamlstext.dump(file)
       end
-    rescue StandardError => e
+    rescue YkutilsError => e
       pp e
       pp e.backtrace
       @valid = false
     end
 
     def dump_ptext_to_file(fname)
-      file = File.open(fname, "w") do |file|
+      File.open(fname, "w") do |file|
         @ptext.each do |l|
-          file.write(l + "\n")
+          file.write("#{l}\n")
         end
       end
-    rescue StandardError => e
+    rescue YkutilsdError => e
       pp e
       pp e.backtrace
       @valid = false
@@ -190,25 +189,25 @@ module Ykutils
 
     def reform
       ret = importex(@ifname)
-      if ret
-        ary = listup_host.collect do |it|
-          key, value = it.split(":")
-          key
-        end
-        str = ary.join(" , ")
-        new_host_list = "=-HOST_LIST: [#{str}]"
-        ary2 = listup_domain.collect do |it|
-          key, value = it.split(":")
-          key
-        end
-        str2 = ary2.join(" , ")
-        new_domain_list = "=-DOMAIN_LIST: [#{str2}]"
-        pp "==new_host_list"
-        pp new_host_list
-        exchange_ptext("=-HOST_LIST", new_host_list)
-        exchange_ptext("=-DOMAIN_LIST", new_domain_list)
-        dump_ptext_to_file(@ofname)
+      return unless ret
+
+      ary = listup_host.collect do |it|
+        key, = it.split(":")
+        key
       end
+      str = ary.join(" , ")
+      new_host_list = "=-HOST_LIST: [#{str}]"
+      ary2 = listup_domain.collect do |it|
+        key, = it.split(":")
+        key
+      end
+      str2 = ary2.join(" , ")
+      new_domain_list = "=-DOMAIN_LIST: [#{str2}]"
+      pp "==new_host_list"
+      pp new_host_list
+      exchange_ptext("=-HOST_LIST", new_host_list)
+      exchange_ptext("=-DOMAIN_LIST", new_domain_list)
+      dump_ptext_to_file(@ofname)
     end
 
     def extract_value(ary)

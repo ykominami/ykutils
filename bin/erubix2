@@ -3,8 +3,8 @@
 
 require "bundler/setup"
 require "ykutils"
-require 'yaml'
-require 'find'
+require "yaml"
+require "find"
 
 ncf = Ykutils::Nginxconfigfiles.new
 re = /base.yml$/

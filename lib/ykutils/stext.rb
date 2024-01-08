@@ -14,13 +14,13 @@ module Ykutils
     include DataStructOp
     include DebugUtils
 
-    def initialize(debug = false)
+    def initialize(debug: false)
       @text = nil
       @fname = nil
       @text_ary = []
 
       debug_utils_init
-      set_debug(debug)
+      debug(debug)
     end
 
     def load_analyze(fname, subfname = nil)
@@ -34,15 +34,15 @@ module Ykutils
     end
 
     def load(fname)
-      load_plain_text_file(fname).collect { |it| it.chomp }
+      load_plain_text_file(fname).collect(&:chomp)
     end
 
     def analyze(line_ary, subfname = nil); end
 
     def dump_to_file(fname)
-      file = FileX.open(fname, "w") do |file|
+      FileX.open(fname, "w") do |file|
         @text_ary.each do |l|
-          file.write(l + "\n")
+          file.write("#{l}\n")
         end
       end
     rescue StandardError => e
@@ -94,13 +94,13 @@ module Ykutils
         case line["STATUS"]
         when AccountLines::HOST_ACCOUNT_START, AccountLines::HOST_ACCOUNT, AccountLines::HOST_ACCOUNT_END
           key, value = line["CONTENT"].split(":") if line["CONTENT"]
-          key.strip! if key
-          value.strip! if value
+          key&.strip!
+          value&.strip!
           host.analyze(line["STATUS"], line, key, value, @main_host_ary, @main_host_hash)
         when AccountLines::DOMAIN_ACCOUNT_START, AccountLines::DOMAIN_ACCOUNT, AccountLines::DOMAIN_ACCOUNT_END
           key, value = line["CONTENT"].split(":") if line["CONTENT"]
-          key.strip! if key
-          value.strip! if value
+          key&.strip!
+          value&.strip!
           domain.analyze(line["STATUS"], line, key, value, @main_domain_ary, @main_domain_hash)
         when AccountLines::SEPARATOR
           key, value = line["CONTENT"].split(":") if line["CONTENT"]
@@ -118,15 +118,13 @@ module Ykutils
     def sort_by(other)
       diff_main_host_ary = @main_host_ary - other.main_host_ary
       diff_main_domain_ary = @main_domain_ary - other.main_domain_ary
-
-      n_main_sep_ary = []
       n_main_sep_hash = {}
       n_main_host_ary = []
       n_main_host_hash = {}
       n_main_domain_ary = []
       n_main_domain_hash = {}
 
-      if other.main_sep_ary.size > 0
+      unless other.main_sep_ary.empty?
         @main_sep_ary |= other.main_sep_ary
         @main_sep_hash |= n_main_sep_hash
       end
@@ -155,33 +153,33 @@ module Ykutils
       @main_domain_hash = n_main_domain_hash
     end
 
-    def sort_by_sub(it, item_hash, item_ary, n_hash, n_ary)
-      h = item_hash[it]
-      if h
-        n_ary << it
-        title = h["TITLE"]
-        hash = h["CONTENT"]
-        ary = []
-        if hash
-          item_ary.each do |ai|
-            v = hash[ai]
-            ary << ai if v
-          end
+    def sort_by_sub(itx, item_hash, item_ary, n_hash, n_ary)
+      h = item_hash[itx]
+      return unless h
+
+      n_ary << itx
+      title = h["TITLE"]
+      hash = h["CONTENT"]
+      ary = []
+      if hash
+        item_ary.each do |ai|
+          v = hash[ai]
+          ary << ai if v
         end
-        n_hash[it] = { "TITLE" => title, "META" => ary, "CONTENT" => hash }
       end
+      n_hash[itx] = { "TITLE" => title, "META" => ary, "CONTENT" => hash }
     end
 
-    def sort_by_sub_for_array(it, item_hash, n_hash, n_ary)
-      h = item_hash[it]
-      if h
-        n_ary << it
-        title = h["TITLE"]
-        ary = h["META"]
-        hash = h["CONTENT"]
+    def sort_by_sub_for_array(itx, item_hash, n_hash, n_ary)
+      h = item_hash[itx]
+      return unless h
 
-        n_hash[it] = { "TITLE" => title, "META" => ary, "CONTENT" => hash }
-      end
+      n_ary << itx
+      title = h["TITLE"]
+      ary = h["META"]
+      hash = h["CONTENT"]
+
+      n_hash[it] = { "TITLE" => title, "META" => ary, "CONTENT" => hash }
     end
 
     def dump(file = nil)
@@ -269,10 +267,6 @@ module Ykutils
   end
 
   class StructuredTextForAccountOneLayerHost < StructuredTextForAccountOneLayer
-    def initialize
-      super
-    end
-
     def analyze(status, line, key, _value, main_ary, main_hash)
       case status
       when AccountLines::HOST_ACCOUNT_START
@@ -312,23 +306,23 @@ module Ykutils
       @item_ary = {}
     end
 
-    def get_event
+    def event
       value = nil
       line = @line_ary.shift
 
       if line
         content = line.strip
-        if content.length == 0
+        if content.empty?
           ret = :EMPTY_LINE
           value = ""
         elsif content =~ /^-(.*)/
           title = Regexp.last_match(1)
-          if title.length > 0
-            ret = :TITLE_LINE
-            value = title
-          else
+          if title.empty?
             ret = :EMPTY_TITLE_LINE
             value = ""
+          else
+            ret = :TITLE_LINE
+            value = title
           end
         else
           ret = :NON_EMPTY_LINE
@@ -385,34 +379,13 @@ module Ykutils
 
       @item_ary = []
       item = nil
-      while state != :BAD and event[0] != :EOF
+      while (state != :BAD) && (event[0] != :EOF)
         case state
-        when :NONE
-          case event[0]
-          when :EMPTY_LINE
-          when :TITLE_LINE
-            @item_ary << (item = Item.new(event[1]))
-          when :EMPTY_TITLE_LINE
-            @item_ary << (item = Item.new(""))
-          when :NON_EMPTY_LINE
-            item.add(event[1])
-          end
-        when :ITEM
-          case event[0]
-          when :EMPTY_LINE
-          when :TITLE_LINE
-            @item_ary << (item = Item.new(event[1]))
-          when :EMPTY_TITLE_LINE
-            @item_ary << (item = Item.new(""))
-          when :NON_EMPTY_LINE
-            item.add(event[1])
-          end
+        when :NONE, :ITEM
+          procx
         else
           case event[0]
-          when :EMPTY_LINE
-          when :TITLE_LINE
-          when :EMPTY_TITLE_LINE
-          when :NON_EMPTY_LINE
+          when :EMPTY_LINE, :TITLE_LINE, :EMPTY_TITLE_LINE, :NON_EMPTY_LINE
             item.add(event[1])
           end
         end
@@ -422,6 +395,17 @@ module Ykutils
       end
 
       @item_ary
+    end
+
+    def procx
+      case event[0]
+      when :EMPTY_LINE, :TITLE_LINE
+        @item_ary << (Item.new(event[1]))
+      when :EMPTY_TITLE_LINE
+        @item_ary << (Item.new(""))
+      when :NON_EMPTY_LINE
+        item.add(event[1])
+      end
     end
   end
 end

@@ -8,11 +8,6 @@ module Ykutils
 
     include DebugUtils
 
-    def initialize(_opt, _args, debug)
-      debug_utils_init
-      set_debug(debug)
-    end
-
     def load(fname)
       #    d_puts "3"
       #    puts_current_method

@@ -2,7 +2,7 @@ require "ykutils/treemanager"
 
 module Ykutils
   class TreeManager
-    def addTag(node_name, tag_name)
+    def add_tag(node_name, tag_name)
       @tag ||= {}
 
       if @tag[node_name]
@@ -12,7 +12,7 @@ module Ykutils
       end
     end
 
-    def getTag(node_name)
+    def tag(node_name)
       ret = nil
       ret = @tag[node_name] if @tag
       ret
