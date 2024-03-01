@@ -10,11 +10,9 @@ GEM
     diff-lcs (1.5.0)
     erubi (1.12.0)
     erubis (2.7.0)
-    filex (0.1.8)
-      bundler
+    filex (0.1.7)
       erubis
       messagex
-      rake (~> 13.0)
     json (2.7.1)
     language_server-protocol (3.17.0.3)
     messagex (0.1.5)
@@ -66,7 +64,7 @@ GEM
     ruby-progressbar (1.13.0)
     tilt (2.3.0)
     unicode-display_width (2.5.0)
-    yard (0.9.34)
+    yard (0.9.36)
 
 PLATFORMS
   ruby
