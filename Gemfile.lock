@@ -7,14 +7,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
-    diff-lcs (1.5.0)
+    diff-lcs (1.5.1)
     erubi (1.12.0)
     erubis (2.7.0)
-    filex (0.1.8)
-      bundler
+    filex (0.1.7)
       erubis
       messagex
-      rake (~> 13.0)
     json (2.7.1)
     language_server-protocol (3.17.0.3)
     messagex (0.1.5)
@@ -27,19 +25,19 @@ GEM
     rake (13.1.0)
     regexp_parser (2.8.3)
     rexml (3.2.6)
-    rspec (3.12.0)
-      rspec-core (~> 3.12.0)
-      rspec-expectations (~> 3.12.0)
-      rspec-mocks (~> 3.12.0)
-    rspec-core (3.12.2)
-      rspec-support (~> 3.12.0)
-    rspec-expectations (3.12.3)
+    rspec (3.13.0)
+      rspec-core (~> 3.13.0)
+      rspec-expectations (~> 3.13.0)
+      rspec-mocks (~> 3.13.0)
+    rspec-core (3.13.0)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.12.0)
-    rspec-mocks (3.12.6)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.12.0)
-    rspec-support (3.12.1)
+      rspec-support (~> 3.13.0)
+    rspec-support (3.13.0)
     rubocop (1.59.0)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -76,7 +74,7 @@ DEPENDENCIES
   erubi
   filex
   rake (~> 13.0)
-  rspec (~> 3.12)
+  rspec (~> 3.13)
   rubocop (~> 1.50)
   rubocop-rake
   rubocop-rspec
