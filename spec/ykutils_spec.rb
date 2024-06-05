@@ -11,7 +11,7 @@ RSpec.describe Ykutils do
   describe "Ykutils::Erubyx" do
     before(:all) do
       base_dir = "v103-3-189-127"
-      @base_dir = Ykutils::TEST_DATA_DIR + base_dir
+      @base_dir_pn = Ykutils::TEST_DATA_DIR + base_dir
     end
 
     it "make_grid_list", version: true do
@@ -27,15 +27,15 @@ RSpec.describe Ykutils do
     end
 
     def make_path_complement(path)
-      @base_dir + path
+      @base_dir_pn + path
     end
 
     it "Ykutils::Nginxconfigfiles", nginx: true do
       ncf = Ykutils::Nginxconfigfiles.new
       re = /base.yml$/
       dir = "a.northern-cross.net"
-      start_dir = make_path_complement(dir)
-      file_list = ncf.get_file_list(start_dir, re)
+      start_dir_pn = make_path_complement(dir)
+      file_list = ncf.get_file_list(start_dir_pn, re)
       ncf.output(file_list)
     end
 

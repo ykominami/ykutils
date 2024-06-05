@@ -1,16 +1,14 @@
 module Ykutils
-  require "find"
   class Nginxconfigfiles
-    def get_file_list(start_dir, reg)
+    def get_file_list(start_dir_pn, reg)
       @file_list = []
 
-      Find.find(start_dir) do |x|
-        next unless x =~ reg
+      start_dir_pn.find { |x|
+        next unless x.to_s =~ reg
 
         # puts x
         @file_list << x
-        Find.prune
-      end
+      }
       @file_list
     end
 
