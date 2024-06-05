@@ -9,6 +9,7 @@ gem "erubi"
 gem "filex"
 gem "rake", "~> 13.2"
 gem "tilt"
+gem "nkf", "0.2.0"
 
 group :development, optional: true do
   gem "yard"
