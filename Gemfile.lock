@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ykutils (0.1.6)
+    ykutils (0.1.9)
 
 GEM
   remote: https://rubygems.org/
