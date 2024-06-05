@@ -4,8 +4,10 @@ require "yaml"
 require "csv"
 require "ykutils/treemanagera"
 if RUBY_VERSION >= "1.8.7"
+  p "1.8.7"
   require "ykutils/nkfutil19"
 else
+  p "Not 1.8.7"
   require "ykutils/nkfutil"
 end
 require "ykutils/debugutils"

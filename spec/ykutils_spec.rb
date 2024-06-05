@@ -11,7 +11,7 @@ RSpec.describe Ykutils do
   describe "Ykutils::Erubyx" do
     before(:all) do
       base_dir = "v103-3-189-127"
-      @base_dir = Ykutils::TEST_DATA_DIR + base_dir
+      @base_dir = Pathname.new(Ykutils::TEST_DATA_DIR) + base_dir
     end
 
     it "make_grid_list", version: true do
