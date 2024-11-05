@@ -28,7 +28,7 @@ require "ykutils/yamlxop"
 
 require "pathname"
 module Ykutils
-  TEST_DATA_DIR = Pathname.new(__dir__).parent + "test_data"
+  TEST_DATA_DIR = Pathname.new(__dir__).parent.join("test_data")
   # Your code goes here...
 
   class YkutilsError < StandardError

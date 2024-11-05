@@ -3,12 +3,12 @@ module Ykutils
     def get_file_list(start_dir_pn, reg)
       @file_list = []
 
-      start_dir_pn.find { |x|
+      start_dir_pn.find do |x|
         next unless x.to_s =~ reg
 
         # puts x
         @file_list << x
-      }
+      end
       @file_list
     end
 
