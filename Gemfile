@@ -7,7 +7,7 @@ gemspec
 
 gem "erubi"
 gem "filex"
-gem "nkf", "0.2.0"
+gem "nkf", "0.3.0"
 gem "rake", "~> 13.3"
 gem "tilt"
 
