@@ -68,7 +68,7 @@ GEM
     ruby-progressbar (1.13.0)
     tilt (2.7.0)
     unicode-display_width (2.5.0)
-    yard (0.9.38)
+    yard (0.9.44)
 
 PLATFORMS
   ruby
