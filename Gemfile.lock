@@ -26,7 +26,7 @@ GEM
       racc
     racc (1.7.3)
     rainbow (3.1.1)
-    rake (13.3.1)
+    rake (13.4.2)
     regexp_parser (2.8.3)
     rexml (3.4.2)
     rspec (3.13.2)
@@ -68,7 +68,7 @@ GEM
     ruby-progressbar (1.13.0)
     tilt (2.9.0)
     unicode-display_width (2.5.0)
-    yard (0.9.38)
+    yard (0.9.45)
 
 PLATFORMS
   ruby
@@ -78,7 +78,7 @@ DEPENDENCIES
   erubi
   filex
   nkf (= 0.3.0)
-  rake (~> 13.3)
+  rake (~> 13.4)
   rspec (~> 3.13)
   rubocop (~> 1.50)
   rubocop-rake
